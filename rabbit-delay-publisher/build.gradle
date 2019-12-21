@@ -1,0 +1,6 @@
+dependencies {
+    implementation("commons-codec:commons-codec")
+    implementation project(':rabbit-message')
+    implementation('org.springframework.boot:spring-boot-starter-amqp')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}

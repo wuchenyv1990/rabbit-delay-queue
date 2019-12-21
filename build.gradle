@@ -1,0 +1,60 @@
+buildscript {
+    ext {
+        commonsLangVersion='3.9'
+        commonsCodecVersion='1.13'
+        lombokVersion='1.18.10'
+        springDependenciesVersion='1.0.8.RELEASE'
+        springbootVersion='2.2.2.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java'
+    //Spring Boot Gradle Plugin插件可以提供executable jar 和 dependencies management
+    id("org.springframework.boot") version "${springbootVersion}" apply false
+    //依赖管理插件
+    id("io.spring.dependency-management") version "${springDependenciesVersion}"
+    //lombok插件，或者不使用插件在dependencies里使用
+    //    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    //    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    id "io.freefair.lombok" version "4.1.6"
+}
+
+allprojects {
+    group 'com.wcyv90'
+    version '1.0-SNAPSHOT'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'io.freefair.lombok'
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.apache.commons:commons-lang3:${commonsLangVersion}"
+            mavenBom "commons-codec:commons-codec:${commonsCodecVersion}"
+        }
+
+    }
+}
+
+project(":rabbit-delay-publisher") {
+    apply plugin: "org.springframework.boot"
+}
+
+project(":rabbit-delay-listener") {
+    apply plugin: "org.springframework.boot"
+}

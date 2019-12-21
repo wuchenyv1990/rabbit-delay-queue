@@ -1,0 +1,8 @@
+dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation("commons-codec:commons-codec")
+    compileOnly('org.springframework.boot:spring-boot-starter-amqp')
+    compileOnly('org.springframework.boot:spring-boot-starter-json')
+}
+//if use additional-spring-configuration-metadata.json
+compileJava.dependsOn(processResources)
