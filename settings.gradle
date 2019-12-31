@@ -1,5 +1,5 @@
 rootProject.name = 'rabbit-delay-queue'
 include 'rabbit-delay-publisher'
 include 'rabbit-delay-listener'
-include 'rabbit-message'
+include 'rabbit-message-common'
 

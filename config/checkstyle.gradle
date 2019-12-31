@@ -1,0 +1,16 @@
+apply plugin: 'checkstyle'
+
+checkstyle {
+//    configFile = file "$projectDir/config/checkstyle/checkstyle.xml"
+    //配置config_loc变量 参见https://gradle.github.io/kotlin-dsl-docs/api/org.gradle.api.plugins.quality/-checkstyle/index.html
+    configDirectory = file "$projectDir/config/checkstyle/"
+    maxErrors = 20
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+

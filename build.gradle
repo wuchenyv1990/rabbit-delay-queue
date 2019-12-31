@@ -2,9 +2,11 @@ buildscript {
     ext {
         commonsLangVersion='3.9'
         commonsCodecVersion='1.13'
-        lombokVersion='1.18.10'
+        lombokVersion='4.1.6'
         springDependenciesVersion='1.0.8.RELEASE'
         springbootVersion='2.2.2.RELEASE'
+        spotbugsVersion='3.0.0'
+        swaggerVersion='2.9.2'
     }
     repositories {
         mavenLocal()
@@ -13,15 +15,18 @@ buildscript {
 }
 
 plugins {
+    id 'checkstyle'
+    id 'jacoco'
     id 'java'
-    //Spring Boot Gradle Plugin插件可以提供executable jar 和 dependencies management
-    id("org.springframework.boot") version "${springbootVersion}" apply false
     //依赖管理插件
     id("io.spring.dependency-management") version "${springDependenciesVersion}"
     //lombok插件，或者不使用插件在dependencies里使用
     //    compileOnly "org.projectlombok:lombok:${lombokVersion}"
     //    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    id "io.freefair.lombok" version "4.1.6"
+    id "io.freefair.lombok" version "${lombokVersion}" apply false
+    //Spring Boot Gradle Plugin插件可以提供executable jar 和 dependencies management
+    id("org.springframework.boot") version "${springbootVersion}" apply false
+    id "com.github.spotbugs" version "${spotbugsVersion}" apply false
 }
 
 allprojects {
@@ -41,11 +46,18 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
+    //几种配置方式
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
             mavenBom "org.apache.commons:commons-lang3:${commonsLangVersion}"
-            mavenBom "commons-codec:commons-codec:${commonsCodecVersion}"
+        }
+        dependencies {
+            dependencySet(group: 'io.springfox', version: "${swaggerVersion}") {
+                entry 'springfox-swagger2'
+                entry 'springfox-swagger-ui'
+            }
+            dependency "commons-codec:commons-codec:${commonsCodecVersion}"
         }
 
     }
@@ -53,8 +65,14 @@ subprojects {
 
 project(":rabbit-delay-publisher") {
     apply plugin: "org.springframework.boot"
+    apply from: "$rootDir/config/checkstyle.gradle"
+    apply from: "$rootDir/config/jacoco.gradle"
+//    apply from: "$rootDir/config/spotbugs.gradle"
 }
 
 project(":rabbit-delay-listener") {
     apply plugin: "org.springframework.boot"
+    apply from: "$rootDir/config/jacoco.gradle"
+    apply from: "$rootDir/config/checkstyle.gradle"
+//    apply from: "$rootDir/config/spotbugs.gradle"
 }

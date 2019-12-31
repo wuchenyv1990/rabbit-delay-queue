@@ -42,7 +42,7 @@ public class XMessageConverter extends SimpleMessageConverter {
                 try {
                     String originStr = new String(message.getBody(), encoding);
                     String deTransferredStr = deTransfer(originStr);
-                    content = deTransfer(deTransferredStr);
+                    content = deserialize(deTransferredStr);
                 }
                 catch (UnsupportedEncodingException e) {
                     throw new MessageConversionException(
@@ -77,7 +77,7 @@ public class XMessageConverter extends SimpleMessageConverter {
             return newUnknownMessage();
         }
         if (xMessage.getBody() != null && !(xMessage.getBody() instanceof String)) {
-            //body是对象时此时为LinkedHashMap
+            //body是对象时此时为LinkedHashMap，重新写成字符串格式
             xMessage.setBody(JsonMapper.dumps(xMessage.getBody()));
         }
         return xMessage;

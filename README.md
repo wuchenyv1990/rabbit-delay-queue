@@ -2,7 +2,7 @@
 sample: delay queue with rabbit<br>
 
 ##1、作为一个spring gradle multiple module模板<br>
-gradle多项目
+gradle多项目，jacoco、checkstyle、findbud配置
 
 ##2、producer两种方式的延迟队列
 <li>1).rabbitmq_delayed_message_exchange插件</li>
@@ -12,4 +12,10 @@ gradle多项目
 <li>XMessage</li>
 <li>requeueIfFail:由spring的异常控制消息重发</li>
 <li>配置客户端重试</li>
+
+##description
+ttl&dead-letter实现的延迟发送队列
+msg(ttl=delay)->{ttl-delay-dead-exchange}->{ttl-delay-buffer-queue}（消息ttl超时）->dead letter-><br>
+{ttl-delay-dead-exchange}(bufferQueue绑定的死信交换机)->{delay-receive-queue}->consumer
+
 

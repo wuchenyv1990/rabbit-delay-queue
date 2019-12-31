@@ -35,6 +35,10 @@ public class XMessageUtils {
                 return newUnknownMessage();
             }
         }
+        if (xMessage.getBody() != null && !(xMessage.getBody() instanceof String)) {
+            //body是对象时此时为LinkedHashMap
+            xMessage.setBody(JsonMapper.dumps(xMessage.getBody()));
+        }
         return xMessage;
     }
 

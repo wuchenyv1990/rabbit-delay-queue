@@ -1,0 +1,19 @@
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.2
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['com.wcyv90.rabbit.delay.publisher.domain.*']
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.1
+            }
+        }
+    }
+}
