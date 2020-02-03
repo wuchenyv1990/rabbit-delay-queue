@@ -1,0 +1,19 @@
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.4
+            }
+        }
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = []
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.1
+            }
+        }
+    }
+}

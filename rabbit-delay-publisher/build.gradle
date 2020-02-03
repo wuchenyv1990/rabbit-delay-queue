@@ -1,6 +1,10 @@
 dependencies {
     implementation("commons-codec:commons-codec")
-    implementation project(':rabbit-message')
+    implementation project(':rabbit-message-common')
+    implementation('io.springfox:springfox-swagger2')
+    implementation('io.springfox:springfox-swagger-ui')
+    implementation('org.apache.commons:commons-lang3')
     implementation('org.springframework.boot:spring-boot-starter-amqp')
+    implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }

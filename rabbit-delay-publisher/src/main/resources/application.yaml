@@ -5,3 +5,10 @@ spring:
   rabbitmq:
     username: admin
     password: admin
+x-common:
+  enable-x-message: true
+  swagger:
+    enable-swagger-ui: true
+    api-title: "Publish msg"
+    api-version: "v1.0"
+    base-package: "com.wcyv90.rabbit.delay.publisher.controller"

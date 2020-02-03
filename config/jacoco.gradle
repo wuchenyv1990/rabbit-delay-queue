@@ -1,0 +1,25 @@
+apply plugin: 'jacoco'
+//需要配置各自的覆盖率
+apply from: "$projectDir/config/jacoco.gradle"
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+        html.destination file("${buildDir}/jacoco")
+    }
+}
+
+test {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
+//覆盖率挂了也要出可视结果
+jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
+
+check.dependsOn(jacocoTestReport)
+check.dependsOn(jacocoTestCoverageVerification)
