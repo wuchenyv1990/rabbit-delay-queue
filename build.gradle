@@ -4,7 +4,7 @@ buildscript {
         commonsCodecVersion='1.13'
         lombokVersion='4.1.6'
         springDependenciesVersion='1.0.8.RELEASE'
-        springbootVersion='2.2.2.RELEASE'
+        springbootVersion='2.3.0.RELEASE'
         spotbugsVersion='3.0.0'
         swaggerVersion='2.9.2'
     }
